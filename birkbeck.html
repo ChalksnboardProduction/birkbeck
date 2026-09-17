@@ -1,0 +1,1739 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Birkbeck, University of London — Study that fits around you</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,500&family=Work+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
+
+    <style>
+      :root {
+        --ink: #1c1b2e;
+        --maroon: #9e1b32;
+        --maroon-deep: #7a1526;
+        --amber: #e8a33d;
+        --amber-soft: #f6d9a4;
+        --teal: #24645c;
+        --paper: #fbf8f2;
+        --paper-dim: #f3ede1;
+        --card: #ffffff;
+        --line: rgba(28, 27, 46, 0.1);
+        font-size: 17px;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        margin: 0;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: "Work Sans", sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+      img {
+        max-width: 100%;
+        display: block;
+      }
+      h1,
+      h2,
+      h3,
+      h4 {
+        font-family: "Newsreader", serif;
+        font-weight: 600;
+        line-height: 1.08;
+        margin: 0;
+        letter-spacing: -0.01em;
+      }
+      p {
+        line-height: 1.65;
+        margin: 0;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      button {
+        font-family: inherit;
+        cursor: pointer;
+      }
+      :focus-visible {
+        outline: 3px solid var(--amber);
+        outline-offset: 2px;
+      }
+
+      .wrap {
+        max-width: 1180px;
+        margin: 0 auto;
+        padding: 0 32px;
+      }
+      @media (max-width: 640px) {
+        .wrap {
+          padding: 0 20px;
+        }
+      }
+
+      /* ---------- Top bar ---------- */
+      .topbar {
+        background: var(--ink);
+        color: #e9e6f2;
+        font-size: 0.82rem;
+      }
+      .topbar .wrap {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 8px;
+        padding-bottom: 8px;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+      .topbar-links {
+        display: flex;
+        gap: 22px;
+      }
+      .topbar-links a {
+        opacity: 0.85;
+        transition: opacity 0.15s;
+      }
+      .topbar-links a:hover {
+        opacity: 1;
+        text-decoration: underline;
+      }
+
+      /* ---------- Header / nav ---------- */
+      header.site {
+        background: var(--paper);
+        border-bottom: 1px solid var(--line);
+        position: sticky;
+        top: 0;
+        z-index: 40;
+        backdrop-filter: blur(6px);
+      }
+      .nav-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px 0;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .brand-mark {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: var(--maroon);
+        color: var(--amber-soft);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Newsreader", serif;
+        font-weight: 700;
+        font-size: 1.5rem;
+        flex-shrink: 0;
+      }
+      .brand-text .name {
+        font-family: "Newsreader", serif;
+        font-weight: 600;
+        font-size: 1.18rem;
+        color: var(--ink);
+      }
+      .brand-text .sub {
+        font-size: 0.74rem;
+        color: #5b5870;
+        letter-spacing: 0.02em;
+      }
+
+      nav.primary {
+        display: flex;
+        gap: 30px;
+        align-items: center;
+      }
+      nav.primary a {
+        font-size: 0.95rem;
+        font-weight: 500;
+        color: var(--ink);
+        position: relative;
+        padding: 6px 0;
+      }
+      nav.primary a::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 2px;
+        background: var(--maroon);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.18s ease;
+      }
+      nav.primary a:hover::after {
+        transform: scaleX(1);
+      }
+      .nav-cta {
+        background: var(--maroon);
+        color: #fff !important;
+        padding: 10px 20px;
+        border-radius: 999px;
+        font-weight: 600 !important;
+        font-size: 0.9rem !important;
+      }
+      .nav-cta::after {
+        display: none;
+      }
+      .nav-cta:hover {
+        background: var(--maroon-deep);
+      }
+      .menu-btn {
+        display: none;
+        background: none;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        width: 42px;
+        height: 42px;
+        align-items: center;
+        justify-content: center;
+      }
+      @media (max-width: 900px) {
+        nav.primary {
+          display: none;
+        }
+        .menu-btn {
+          display: flex;
+        }
+      }
+      .mobile-nav {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        padding: 8px 0 20px;
+        border-top: 1px solid var(--line);
+      }
+      .mobile-nav a {
+        padding: 12px 4px;
+        font-weight: 500;
+        border-bottom: 1px solid var(--line);
+      }
+
+      /* ---------- Hero ---------- */
+      .hero {
+        position: relative;
+        overflow: hidden;
+        padding: 64px 0 88px;
+      }
+      .hero-grid {
+        display: grid;
+        grid-template-columns: 1.05fr 0.95fr;
+        gap: 56px;
+        align-items: center;
+      }
+      @media (max-width: 900px) {
+        .hero-grid {
+          grid-template-columns: 1fr;
+          gap: 40px;
+        }
+      }
+      .hero-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--amber-soft);
+        color: var(--maroon-deep);
+        padding: 7px 16px;
+        border-radius: 999px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin-bottom: 22px;
+      }
+      .hero h1 {
+        font-size: clamp(2.4rem, 4.6vw, 3.6rem);
+        color: var(--ink);
+      }
+      .hero h1 em {
+        font-style: italic;
+        color: var(--maroon);
+      }
+      .hero p.lead {
+        margin-top: 22px;
+        font-size: 1.14rem;
+        color: #403d54;
+        max-width: 46ch;
+      }
+      .hero-actions {
+        display: flex;
+        gap: 14px;
+        margin-top: 34px;
+        flex-wrap: wrap;
+      }
+      .btn {
+        padding: 14px 26px;
+        border-radius: 999px;
+        font-weight: 600;
+        font-size: 0.98rem;
+        border: 2px solid transparent;
+        display: inline-block;
+        transition:
+          transform 0.15s ease,
+          box-shadow 0.15s ease,
+          background 0.15s ease;
+      }
+      .btn-primary {
+        background: var(--maroon);
+        color: #fff;
+      }
+      .btn-primary:hover {
+        background: var(--maroon-deep);
+        transform: translateY(-2px);
+        box-shadow: 0 10px 22px rgba(158, 27, 50, 0.28);
+      }
+      .btn-ghost {
+        background: transparent;
+        border-color: var(--ink);
+        color: var(--ink);
+      }
+      .btn-ghost:hover {
+        background: var(--ink);
+        color: var(--paper);
+      }
+
+      .hero-stats {
+        display: flex;
+        gap: 34px;
+        margin-top: 46px;
+        flex-wrap: wrap;
+      }
+      .hero-stats div .num {
+        font-family: "Newsreader", serif;
+        font-size: 1.9rem;
+        font-weight: 600;
+        color: var(--maroon);
+      }
+      .hero-stats div .label {
+        font-size: 0.82rem;
+        color: #5b5870;
+        max-width: 15ch;
+      }
+
+      .hero-art {
+        position: relative;
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-end;
+      }
+      .hero-photo {
+        width: 100%;
+        aspect-ratio: 4/4.6;
+        border-radius: 38% 62% 55% 45% / 48% 42% 58% 52%;
+        overflow: hidden;
+        box-shadow: 0 30px 60px -20px rgba(28, 27, 46, 0.35);
+        background: linear-gradient(
+          160deg,
+          var(--maroon),
+          var(--maroon-deep) 55%,
+          var(--ink)
+        );
+      }
+      .hero-photo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        mix-blend-mode: normal;
+      }
+      .hero-badge {
+        position: absolute;
+        bottom: -18px;
+        left: -18px;
+        background: var(--card);
+        border-radius: 22px;
+        padding: 16px 20px;
+        box-shadow: 0 18px 34px rgba(28, 27, 46, 0.18);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        max-width: 230px;
+      }
+      @media (max-width: 900px) {
+        .hero-badge {
+          left: 10px;
+        }
+      }
+      .hero-badge .dot {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        background: var(--amber);
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        color: var(--ink);
+      }
+      .hero-badge .t1 {
+        font-weight: 600;
+        font-size: 0.88rem;
+      }
+      .hero-badge .t2 {
+        font-size: 0.76rem;
+        color: #5b5870;
+      }
+      .hero-form-card {
+        width: min(100%, 480px);
+        background: rgba(245, 244, 235, 0.9);
+        border: 1px solid rgba(36, 100, 92, 0.35);
+        border-radius: 24px;
+        box-shadow: 0 18px 40px rgba(28, 27, 46, 0.08);
+        padding: 28px 24px 22px;
+        margin-top: 18px;
+      }
+      .hero-form-card h3 {
+        font-size: clamp(2rem, 2vw, 3rem);
+        margin: 0 0 10px;
+        color: #1d3f3f;
+        font-family: "Newsreader", serif;
+      }
+      .hero-form-card .form-subtitle {
+        font-size: 1rem;
+        color: #42575a;
+        margin-bottom: 24px;
+      }
+      .hero-form-card iframe {
+        width: 100%;
+        min-height: 660px;
+        height: 660px;
+        border: 0;
+        border-radius: 18px;
+        background: #fff;
+        display: block;
+      }
+      @media (max-width: 900px) {
+        .hero-form-card {
+          width: 100%;
+          margin-top: 0;
+        }
+      }
+
+      /* ---------- Section shell ---------- */
+      section {
+        padding: 80px 0;
+      }
+      .section-head {
+        max-width: 620px;
+        margin-bottom: 48px;
+      }
+      .section-head.center {
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+      }
+      .section-head h2 {
+        font-size: clamp(1.9rem, 3vw, 2.5rem);
+      }
+      .section-head p {
+        margin-top: 14px;
+        color: #4a4760;
+        font-size: 1.05rem;
+      }
+      .kicker {
+        font-weight: 600;
+        color: var(--teal);
+        font-size: 0.92rem;
+        margin-bottom: 10px;
+        display: block;
+      }
+
+      /* ---------- Study paths (cards) ---------- */
+      .paths {
+        background: var(--paper-dim);
+      }
+      .path-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 22px;
+      }
+      @media (max-width: 980px) {
+        .path-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (max-width: 560px) {
+        .path-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      .path-card {
+        background: var(--card);
+        border-radius: 24px;
+        padding: 30px 26px;
+        border: 1px solid var(--line);
+        transition:
+          transform 0.18s ease,
+          box-shadow 0.18s ease;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+      .path-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 22px 40px -18px rgba(28, 27, 46, 0.25);
+      }
+      .path-icon {
+        width: 52px;
+        height: 52px;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.4rem;
+      }
+      .path-card h3 {
+        font-size: 1.2rem;
+      }
+      .path-card p {
+        color: #4a4760;
+        font-size: 0.94rem;
+      }
+      .path-card .learn {
+        margin-top: auto;
+        font-weight: 600;
+        font-size: 0.88rem;
+        color: var(--maroon);
+      }
+
+      /* ---------- Why Birkbeck / lamplight story ---------- */
+      .story {
+        display: grid;
+        grid-template-columns: 0.9fr 1.1fr;
+        gap: 64px;
+        align-items: center;
+      }
+      @media (max-width: 900px) {
+        .story {
+          grid-template-columns: 1fr;
+        }
+      }
+      .story-visual {
+        background: var(--ink);
+        border-radius: 28px;
+        padding: 44px 36px;
+        color: var(--paper);
+        position: relative;
+        overflow: hidden;
+      }
+      .story-visual::before {
+        content: "";
+        position: absolute;
+        width: 260px;
+        height: 260px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(232, 163, 61, 0.45),
+          transparent 70%
+        );
+        top: -90px;
+        right: -90px;
+      }
+      .lamp-row {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 26px;
+        position: relative;
+      }
+      .lamp-icon {
+        width: 46px;
+        height: 46px;
+        border-radius: 50%;
+        background: var(--amber);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.3rem;
+      }
+      .story-visual h3 {
+        color: #fff;
+        font-size: 1.5rem;
+        position: relative;
+      }
+      .story-visual p {
+        color: #cfcbe0;
+        margin-top: 14px;
+        position: relative;
+        font-size: 0.98rem;
+      }
+      .story-quote {
+        margin-top: 28px;
+        padding-top: 22px;
+        border-top: 1px solid rgba(255, 255, 255, 0.15);
+        position: relative;
+      }
+      .story-quote p {
+        font-family: "Newsreader", serif;
+        font-style: italic;
+        font-size: 1.05rem;
+        color: #f1eee0;
+      }
+      .story-quote .who {
+        margin-top: 10px;
+        font-size: 0.82rem;
+        color: #a8a4c0;
+        font-style: normal;
+      }
+
+      .reasons {
+        display: flex;
+        flex-direction: column;
+        gap: 26px;
+      }
+      .reason {
+        display: flex;
+        gap: 18px;
+      }
+      .reason .num {
+        font-family: "Newsreader", serif;
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: var(--maroon);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 2px solid var(--amber-soft);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .reason h4 {
+        font-size: 1.08rem;
+        margin-bottom: 6px;
+      }
+      .reason p {
+        color: #4a4760;
+        font-size: 0.96rem;
+      }
+
+      /* ---------- Campuses ---------- */
+      .campus-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 26px;
+      }
+      @media (max-width: 800px) {
+        .campus-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      .campus-card {
+        border-radius: 26px;
+        overflow: hidden;
+        background: var(--card);
+        border: 1px solid var(--line);
+      }
+      .campus-photo {
+        height: 210px;
+        background-size: cover;
+        background-position: center;
+      }
+      .campus-photo.london {
+        background-image:
+          linear-gradient(
+            120deg,
+            rgba(158, 27, 50, 0.55),
+            rgba(28, 27, 46, 0.55)
+          ),
+          url("https://images.unsplash.com/photo-1529655683826-aba9b3e77383?q=80&w=1200&auto=format&fit=crop");
+      }
+      .campus-photo.blr {
+        background-image:
+          linear-gradient(
+            120deg,
+            rgba(36, 100, 92, 0.55),
+            rgba(28, 27, 46, 0.55)
+          ),
+          url("https://images.unsplash.com/photo-1596176530529-78163a4f7af2?q=80&w=1200&auto=format&fit=crop");
+      }
+      .campus-body {
+        padding: 26px 28px 30px;
+      }
+      .campus-body .tag {
+        display: inline-block;
+        background: var(--amber-soft);
+        color: var(--maroon-deep);
+        font-size: 0.78rem;
+        font-weight: 600;
+        padding: 5px 12px;
+        border-radius: 999px;
+        margin-bottom: 12px;
+      }
+      .campus-body h3 {
+        font-size: 1.3rem;
+        margin-bottom: 10px;
+      }
+      .campus-body p {
+        color: #4a4760;
+        font-size: 0.95rem;
+      }
+      .campus-body a.link {
+        display: inline-block;
+        margin-top: 16px;
+        font-weight: 600;
+        color: var(--maroon);
+        font-size: 0.92rem;
+      }
+
+      /* ---------- Stories / testimonials ---------- */
+      .stories {
+        background: var(--paper-dim);
+      }
+      .story-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 22px;
+      }
+      @media (max-width: 900px) {
+        .story-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      .testi {
+        background: var(--card);
+        border-radius: 24px;
+        padding: 28px 26px;
+        border: 1px solid var(--line);
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+      .testi-top {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+      .avatar {
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Newsreader", serif;
+        font-weight: 600;
+        font-size: 1.1rem;
+        color: #fff;
+        flex-shrink: 0;
+      }
+      .testi-top .who {
+        font-weight: 600;
+        font-size: 0.98rem;
+      }
+      .testi-top .what {
+        font-size: 0.8rem;
+        color: #5b5870;
+      }
+      .testi p.body {
+        font-size: 0.96rem;
+        color: #332f47;
+        font-family: "Newsreader", serif;
+        font-style: italic;
+        line-height: 1.6;
+      }
+
+      /* ---------- Events / news strip ---------- */
+      .news-strip {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 22px;
+      }
+      @media (max-width: 900px) {
+        .news-strip {
+          grid-template-columns: 1fr;
+        }
+      }
+      .news-card {
+        border-radius: 24px;
+        padding: 32px;
+        border: 1px solid var(--line);
+        background: var(--card);
+      }
+      .news-card.feature {
+        background: linear-gradient(135deg, var(--maroon), var(--maroon-deep));
+        color: #fff;
+        border: none;
+      }
+      .news-card.feature .tag {
+        color: var(--amber-soft);
+      }
+      .news-card .tag {
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--teal);
+        display: block;
+        margin-bottom: 12px;
+      }
+      .news-card h3 {
+        font-size: 1.3rem;
+        margin-bottom: 10px;
+      }
+      .news-card.feature h3 {
+        color: #fff;
+      }
+      .news-card p {
+        color: #4a4760;
+        font-size: 0.94rem;
+      }
+      .news-card.feature p {
+        color: #efe6e8;
+      }
+      .news-card a.link {
+        display: inline-block;
+        margin-top: 18px;
+        font-weight: 600;
+        font-size: 0.9rem;
+      }
+      .news-card.feature a.link {
+        color: #fff;
+        text-decoration: underline;
+      }
+      .news-card:not(.feature) a.link {
+        color: var(--maroon);
+      }
+      .mini-event {
+        display: flex;
+        gap: 16px;
+        padding: 16px 0;
+        border-bottom: 1px solid var(--line);
+      }
+      .mini-event:last-child {
+        border-bottom: none;
+      }
+      .mini-date {
+        background: var(--paper-dim);
+        border-radius: 14px;
+        padding: 10px 12px;
+        text-align: center;
+        width: 60px;
+        flex-shrink: 0;
+      }
+      .mini-date .d {
+        font-family: "Newsreader", serif;
+        font-weight: 700;
+        font-size: 1.2rem;
+        color: var(--maroon);
+      }
+      .mini-date .m {
+        font-size: 0.7rem;
+        color: #5b5870;
+        text-transform: uppercase;
+      }
+      .mini-event h4 {
+        font-size: 0.96rem;
+        margin-bottom: 4px;
+      }
+      .mini-event p {
+        font-size: 0.82rem;
+        color: #5b5870;
+      }
+
+      /* ---------- CTA banner ---------- */
+      .cta-band {
+        background: var(--ink);
+        border-radius: 32px;
+        padding: 56px 48px;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 30px;
+        flex-wrap: wrap;
+        position: relative;
+        overflow: hidden;
+      }
+      .cta-band::after {
+        content: "";
+        position: absolute;
+        right: -60px;
+        bottom: -80px;
+        width: 280px;
+        height: 280px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(232, 163, 61, 0.35),
+          transparent 70%
+        );
+      }
+      .cta-band h2 {
+        color: #fff;
+        font-size: clamp(1.7rem, 3vw, 2.2rem);
+        max-width: 16ch;
+        position: relative;
+      }
+      .cta-band p {
+        color: #cfcbe0;
+        margin-top: 12px;
+        max-width: 40ch;
+        position: relative;
+      }
+      .cta-actions {
+        display: flex;
+        gap: 14px;
+        flex-wrap: wrap;
+        position: relative;
+      }
+      .cta-actions .btn-primary {
+        background: var(--amber);
+        color: var(--ink);
+      }
+      .cta-actions .btn-primary:hover {
+        background: #f0b458;
+      }
+      .cta-actions .btn-ghost {
+        border-color: rgba(255, 255, 255, 0.5);
+        color: #fff;
+      }
+      .cta-actions .btn-ghost:hover {
+        background: #fff;
+        color: var(--ink);
+      }
+
+      /* ---------- Book a visit (embedded form) ---------- */
+      .visit {
+        background: var(--paper-dim);
+      }
+      .visit-shell {
+        display: grid;
+        grid-template-columns: 0.85fr 1.15fr;
+        gap: 0;
+        border-radius: 28px;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        background: var(--card);
+      }
+      @media (max-width: 860px) {
+        .visit-shell {
+          grid-template-columns: 1fr;
+        }
+      }
+      .visit-info {
+        background: var(--ink);
+        color: #fff;
+        padding: 44px 38px;
+        position: relative;
+        overflow: hidden;
+      }
+      .visit-info::before {
+        content: "";
+        position: absolute;
+        width: 220px;
+        height: 220px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(232, 163, 61, 0.4),
+          transparent 70%
+        );
+        top: -70px;
+        left: -70px;
+      }
+      .visit-info .lamp-icon {
+        margin-bottom: 18px;
+      }
+      .visit-info h3 {
+        color: #fff;
+        font-size: 1.5rem;
+        position: relative;
+      }
+      .visit-info p {
+        color: #cfcbe0;
+        margin-top: 14px;
+        font-size: 0.96rem;
+        position: relative;
+      }
+      .visit-info ul {
+        list-style: none;
+        margin: 24px 0 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        position: relative;
+      }
+      .visit-info li {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        font-size: 0.9rem;
+        color: #e9e6f2;
+      }
+      .visit-info li .tick {
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        background: var(--amber);
+        color: var(--ink);
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.72rem;
+        font-weight: 700;
+        margin-top: 1px;
+      }
+      .visit-frame-wrap {
+        padding: 14px;
+        background: var(--paper);
+      }
+      .visit-frame-wrap iframe {
+        width: 100%;
+        height: 820px;
+        border: none;
+        border-radius: 18px;
+        display: block;
+        background: #fff;
+      }
+      @media (max-width: 520px) {
+        .visit-frame-wrap iframe {
+          height: 920px;
+        }
+      }
+
+      /* ---------- Footer ---------- */
+      footer {
+        background: var(--ink);
+        color: #cfcbe0;
+        padding: 64px 0 28px;
+        margin-top: 40px;
+      }
+      .foot-grid {
+        display: grid;
+        grid-template-columns: 1.3fr repeat(3, 1fr);
+        gap: 40px;
+      }
+      @media (max-width: 800px) {
+        .foot-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      @media (max-width: 520px) {
+        .foot-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      .foot-brand .brand-mark {
+        background: var(--amber);
+        color: var(--ink);
+      }
+      .foot-brand p {
+        margin-top: 16px;
+        font-size: 0.9rem;
+        color: #a8a4c0;
+        max-width: 32ch;
+      }
+      .foot-social {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+      }
+      .foot-social a {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.85rem;
+      }
+      .foot-social a:hover {
+        background: var(--amber);
+        color: var(--ink);
+        border-color: var(--amber);
+      }
+      .foot-col h5 {
+        color: #fff;
+        font-family: "Work Sans", sans-serif;
+        font-weight: 600;
+        font-size: 0.92rem;
+        margin-bottom: 16px;
+      }
+      .foot-col ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 11px;
+      }
+      .foot-col a {
+        font-size: 0.88rem;
+        color: #b8b4cc;
+      }
+      .foot-col a:hover {
+        color: #fff;
+        text-decoration: underline;
+      }
+      .foot-bottom {
+        margin-top: 52px;
+        padding-top: 24px;
+        border-top: 1px solid rgba(255, 255, 255, 0.12);
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 12px;
+        font-size: 0.8rem;
+        color: #8f8ba8;
+      }
+
+      /* utility */
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+      }
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          transition: none !important;
+          scroll-behavior: auto !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script type="text/babel" data-presets="react">
+      const { useState } = React;
+
+      const PALETTE_ICON_BG = ["#f6d9a4", "#cfe3e0", "#f3c9cf", "#dfe0f2"];
+
+      function TopBar() {
+        return (
+          <div className="topbar">
+            <div className="wrap">
+              <span>Central London · Evening, daytime &amp; online study</span>
+              <div className="topbar-links">
+                <a href="#international">International students</a>
+                <a href="#library">Library</a>
+                <a href="#contact">Contact us</a>
+              </div>
+            </div>
+          </div>
+        );
+      }
+
+      function Header() {
+        const [open, setOpen] = useState(false);
+        const links = [
+          "Find a course",
+          "Study",
+          "International",
+          "Student life",
+          "Research",
+          "News",
+        ];
+        return (
+          <header className="site">
+            <div className="wrap">
+              <div className="nav-row">
+                <a href="#top" className="brand">
+                  <span className="brand-mark">B</span>
+                  <span className="brand-text">
+                    <div className="name">Birkbeck</div>
+                    <div className="sub">University of London</div>
+                  </span>
+                </a>
+                <nav className="primary">
+                  {links.map((l) => (
+                    <a
+                      key={l}
+                      href={"#" + l.toLowerCase().replace(/\s+/g, "-")}
+                    >
+                      {l}
+                    </a>
+                  ))}
+                  <a href="#apply" className="nav-cta">
+                    Find a course
+                  </a>
+                </nav>
+                <button
+                  className="menu-btn"
+                  aria-label="Toggle menu"
+                  onClick={() => setOpen(!open)}
+                >
+                  {open ? "✕" : "☰"}
+                </button>
+              </div>
+              {open && (
+                <div className="mobile-nav">
+                  {links.map((l) => (
+                    <a
+                      key={l}
+                      href={"#" + l.toLowerCase().replace(/\s+/g, "-")}
+                      onClick={() => setOpen(false)}
+                    >
+                      {l}
+                    </a>
+                  ))}
+                  <a href="#apply" onClick={() => setOpen(false)}>
+                    Find a course
+                  </a>
+                </div>
+              )}
+            </div>
+          </header>
+        );
+      }
+
+      function Hero() {
+        return (
+          <section className="hero" id="top">
+            <div className="wrap hero-grid">
+              <div>
+                <span className="hero-eyebrow">
+                  🕯️ Teaching since 1823, mostly after dark
+                </span>
+                <h1>
+                  Study that fits <em>around</em> your life, not the other way
+                  round.
+                </h1>
+                <p className="lead">
+                  Birkbeck is the only university in London built for people who
+                  work by day and learn by evening — though plenty of our
+                  students now study by daylight too. Same rigorous University
+                  of London degree, on a timetable that bends to your week.
+                </p>
+                <div className="hero-actions">
+                  <a href="#apply" className="btn btn-primary">
+                    Find a course
+                  </a>
+                  <a href="#book-visit" className="btn btn-ghost">
+                    Book a campus visit
+                  </a>
+                </div>
+                <div className="hero-stats">
+                  <div>
+                    <div className="num">200+</div>
+                    <div className="label">
+                      years of teaching working Londoners
+                    </div>
+                  </div>
+                  <div>
+                    <div className="num">1</div>
+                    <div className="label">
+                      campus in the heart of Bloomsbury
+                    </div>
+                  </div>
+                  <div>
+                    <div className="num">3</div>
+                    <div className="label">
+                      ways to study: evening, day, online
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="hero-art">
+                <div className="hero-form-card">
+                  <h3>Book a School Visit</h3>
+                  <div className="form-subtitle">
+                    Fill out the form below and our counsellor will contact you.
+                  </div>
+                  <iframe
+                    src="https://docs.google.com/forms/d/e/1FAIpQLSc202Nq0BbkqQj62pPGtv2eusbh-uQqebOZgc5Q3o-2vb1JTg/viewform?embedded=true"
+                    title="Book a school visit form"
+                    loading="lazy"
+                  >
+                    Loading form…
+                  </iframe>
+                </div>
+              </div>
+            </div>
+          </section>
+        );
+      }
+
+      function StudyPaths() {
+        const paths = [
+          {
+            icon: "📖",
+            title: "Undergraduate",
+            text: "Full- and part-time degrees taught in the evening, built for people juggling work and study.",
+            href: "#",
+          },
+          {
+            icon: "🎓",
+            title: "Postgraduate",
+            text: "MA, MSc and LLM courses across every subject, from an hour a week to full immersion.",
+            href: "#",
+          },
+          {
+            icon: "🔬",
+            title: "MPhil/PhD research",
+            text: "Join a close-knit research community supervised by academics working at the edge of their field.",
+            href: "#",
+          },
+          {
+            icon: "⏱️",
+            title: "Short courses",
+            text: "Single modules and certificates of higher education — no long commitment required.",
+            href: "#",
+          },
+        ];
+        return (
+          <section className="paths" id="study">
+            <div className="wrap">
+              <div className="section-head">
+                <span className="kicker">Ways to study</span>
+                <h2>
+                  Whichever door you walk through, the standard is the same.
+                </h2>
+                <p>
+                  Every Birkbeck course leads to a University of London
+                  qualification — the difference is how much time you can give
+                  it each week.
+                </p>
+              </div>
+              <div className="path-grid">
+                {paths.map((p, i) => (
+                  <div className="path-card" key={p.title}>
+                    <div
+                      className="path-icon"
+                      style={{
+                        background: PALETTE_ICON_BG[i % PALETTE_ICON_BG.length],
+                      }}
+                    >
+                      {p.icon}
+                    </div>
+                    <h3>{p.title}</h3>
+                    <p>{p.text}</p>
+                    <a href={p.href} className="learn">
+                      Explore courses
+                    </a>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        );
+      }
+
+      function Story() {
+        const reasons = [
+          {
+            t: "Built for evenings, open to everyone",
+            d: "Most of our courses still teach after 6pm, so a working week never has to stand in the way of a degree.",
+          },
+          {
+            t: "Taught by researchers, not just lecturers",
+            d: "You're taught by academics who are actively publishing in their field — many teaching the same evening they finish a day of research.",
+          },
+          {
+            t: "A single, small campus in Bloomsbury",
+            d: "No sprawling suburbs to navigate — Birkbeck sits among London\u2019s museums, libraries and legal quarter.",
+          },
+        ];
+        return (
+          <section id="why">
+            <div className="wrap story">
+              <div className="story-visual">
+                <div className="lamp-row">
+                  <div className="lamp-icon">🦉</div>
+                  <h3>The lamp, lit since 1823</h3>
+                </div>
+                <p>
+                  Birkbeck's owl-and-lamp mark comes from its founding promise:
+                  that learning shouldn't stop when the working day ends. That
+                  idea still shapes every timetable we write.
+                </p>
+                <div className="story-quote">
+                  <p>
+                    "I achieved more than I could have imagined — studying
+                    psychology gave me a clear path into neuroscience."
+                  </p>
+                  <div className="who">Allal Hammouda, Birkbeck graduate</div>
+                </div>
+              </div>
+              <div className="reasons">
+                <div className="section-head" style={{ marginBottom: "8px" }}>
+                  <span className="kicker">Why Birkbeck</span>
+                  <h2>Three things that don't change once you enrol.</h2>
+                </div>
+                {reasons.map((r, i) => (
+                  <div className="reason" key={r.t}>
+                    <div className="num">{i + 1}</div>
+                    <div>
+                      <h4>{r.t}</h4>
+                      <p>{r.d}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        );
+      }
+
+      function Campuses() {
+        return (
+          <section className="paths" id="campuses">
+            <div className="wrap">
+              <div className="section-head">
+                <span className="kicker">Where you'll study</span>
+                <h2>Two campuses, one degree.</h2>
+                <p>
+                  Study on our historic Bloomsbury site in central London, or at
+                  our newer campus in Bengaluru — both award the same University
+                  of London qualification.
+                </p>
+              </div>
+              <div className="campus-grid">
+                <div className="campus-card">
+                  <div className="campus-photo london"></div>
+                  <div className="campus-body">
+                    <span className="tag">London</span>
+                    <h3>Bloomsbury, central London</h3>
+                    <p>
+                      Minutes from the British Library, the British Museum and
+                      several major transport hubs — surrounded by the galleries
+                      and archives you'll actually use.
+                    </p>
+                    <a href="#" className="link">
+                      See the London campus →
+                    </a>
+                  </div>
+                </div>
+                <div className="campus-card">
+                  <div className="campus-photo blr"></div>
+                  <div className="campus-body">
+                    <span className="tag">India</span>
+                    <h3>Bengaluru</h3>
+                    <p>
+                      Study for a globally-recognised University of London
+                      degree in India, without relocating overseas.
+                    </p>
+                    <a href="#" className="link">
+                      See the Bengaluru campus →
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        );
+      }
+
+      function Stories() {
+        const items = [
+          {
+            name: "Abi Daré",
+            what: "MA Creative Writing alumna",
+            body: "Studying at Birkbeck was where the discipline of writing every evening turned into an international bestseller.",
+            color: "#9e1b32",
+          },
+          {
+            name: "Andy Adcroft",
+            what: "Professor, School of Business",
+            body: "I should have gone to drama school — but teaching here, evening after evening, taught me just as much about an audience.",
+            color: "#24645c",
+          },
+          {
+            name: "Allal Hammouda",
+            what: "Psychology graduate",
+            body: "I achieved more than I could have imagined. Studying here gave me the confidence for a career in neuroscience.",
+            color: "#e8a33d",
+          },
+        ];
+        return (
+          <section className="stories" id="student-life">
+            <div className="wrap">
+              <div className="section-head center">
+                <span className="kicker">From the community</span>
+                <h2>People who studied here, in their own words.</h2>
+              </div>
+              <div className="story-grid">
+                {items.map((it) => (
+                  <div className="testi" key={it.name}>
+                    <div className="testi-top">
+                      <div className="avatar" style={{ background: it.color }}>
+                        {it.name
+                          .split(" ")
+                          .map((n) => n[0])
+                          .join("")}
+                      </div>
+                      <div>
+                        <div className="who">{it.name}</div>
+                        <div className="what">{it.what}</div>
+                      </div>
+                    </div>
+                    <p className="body">"{it.body}"</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        );
+      }
+
+      function NewsEvents() {
+        return (
+          <section id="news">
+            <div className="wrap news-strip">
+              <div className="news-card feature">
+                <span className="tag">Latest news</span>
+                <h3>New joint undergraduate degree in Public Health</h3>
+                <p>
+                  Birkbeck and the London School of Hygiene &amp; Tropical
+                  Medicine combine undergraduate teaching with world-leading
+                  public health research.
+                </p>
+                <a href="#" className="link">
+                  Read the story
+                </a>
+              </div>
+              <div className="news-card">
+                <span className="tag">Upcoming</span>
+                <div className="mini-event">
+                  <div className="mini-date">
+                    <div className="d">31</div>
+                    <div className="m">Oct</div>
+                  </div>
+                  <div>
+                    <h4>Undergraduate Open Day</h4>
+                    <p>
+                      A Halloween-themed open day for anyone starting in 2027.
+                    </p>
+                  </div>
+                </div>
+                <div className="mini-event">
+                  <div className="mini-date">
+                    <div className="d">02</div>
+                    <div className="m">Oct</div>
+                  </div>
+                  <div>
+                    <h4>Postgraduate application deadline</h4>
+                    <p>Final week to secure a place for the coming term.</p>
+                  </div>
+                </div>
+                <div className="mini-event">
+                  <div className="mini-date">
+                    <div className="d">15</div>
+                    <div className="m">Nov</div>
+                  </div>
+                  <div>
+                    <h4>Evening study explained</h4>
+                    <p>
+                      A live Q&amp;A on what a term of part-time study actually
+                      looks like.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        );
+      }
+
+      function BookVisit() {
+        return (
+          <section className="visit" id="book-visit">
+            <div className="wrap">
+              <div className="section-head">
+                <span className="kicker">Come and meet us</span>
+                <h2>Book a campus visit.</h2>
+                <p>
+                  Tell us a little about yourself and one of our counsellors
+                  will get back to you with a time that works.
+                </p>
+              </div>
+              <div className="visit-shell">
+                <div className="visit-info">
+                  <div className="lamp-icon">🕯️</div>
+                  <h3>What to expect</h3>
+                  <p>
+                    A short, no-pressure conversation about your course options,
+                    entry requirements and how evening or online study could fit
+                    your week.
+                  </p>
+                  <ul>
+                    <li>
+                      <span className="tick">✓</span> Walk the Bloomsbury campus
+                      in person
+                    </li>
+                    <li>
+                      <span className="tick">✓</span> Meet current students and
+                      staff
+                    </li>
+                    <li>
+                      <span className="tick">✓</span> Get course-specific advice
+                      on the spot
+                    </li>
+                  </ul>
+                </div>
+                <div className="visit-frame-wrap">
+                  <iframe
+                    src="https://docs.google.com/forms/d/e/1FAIpQLSc202Nq0BbkqQj62pPGtv2eusbh-uQqebOZgc5Q3o-2vb1JTg/viewform?embedded=true"
+                    title="Book a campus visit form"
+                    loading="lazy"
+                  >
+                    Loading form…
+                  </iframe>
+                </div>
+              </div>
+            </div>
+          </section>
+        );
+      }
+
+      function CTABand() {
+        return (
+          <section id="apply">
+            <div className="wrap">
+              <div className="cta-band">
+                <div>
+                  <h2>Applications for Clearing close 23 September.</h2>
+                  <p>
+                    Talk to us before the deadline, or order a digital
+                    prospectus to read at your own pace.
+                  </p>
+                </div>
+                <div className="cta-actions">
+                  <a href="#" className="btn btn-primary">
+                    Apply via Clearing
+                  </a>
+                  <a href="#" className="btn btn-ghost">
+                    Order a prospectus
+                  </a>
+                </div>
+              </div>
+            </div>
+          </section>
+        );
+      }
+
+      function Footer() {
+        const cols = [
+          {
+            h: "Study",
+            links: [
+              "Find a course",
+              "Undergraduate study",
+              "Postgraduate study",
+              "MPhil/PhD research",
+              "Short courses",
+              "How to apply",
+            ],
+          },
+          {
+            h: "Life at Birkbeck",
+            links: [
+              "Student life",
+              "International students",
+              "Financial support",
+              "Library",
+              "Careers support",
+            ],
+          },
+          {
+            h: "About",
+            links: [
+              "About us",
+              "Our story",
+              "Term dates",
+              "Governance",
+              "Contact us",
+              "Jobs",
+            ],
+          },
+        ];
+        return (
+          <footer id="contact">
+            <div className="wrap">
+              <div className="foot-grid">
+                <div className="foot-brand">
+                  <a href="#top" className="brand">
+                    <span className="brand-mark">B</span>
+                    <span className="brand-text">
+                      <div className="name" style={{ color: "#fff" }}>
+                        Birkbeck
+                      </div>
+                      <div className="sub">University of London</div>
+                    </span>
+                  </a>
+                  <p>
+                    A member of the University of London, teaching in central
+                    London since 1823 — mostly after the sun goes down.
+                  </p>
+                  <div className="foot-social">
+                    {["𝕏", "▶", "in", "◎"].map((s, i) => (
+                      <a href="#" key={i}>
+                        {s}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+                {cols.map((c) => (
+                  <div className="foot-col" key={c.h}>
+                    <h5>{c.h}</h5>
+                    <ul>
+                      {c.links.map((l) => (
+                        <li key={l}>
+                          <a href="#">{l}</a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+              <div className="foot-bottom">
+                <span>
+                  © {new Date().getFullYear()} Birkbeck, University of London.
+                  Malet Street, London WC1E 7HX.
+                </span>
+                <span>Privacy · Cookies · Accessibility statement</span>
+              </div>
+            </div>
+          </footer>
+        );
+      }
+
+      function App() {
+        return (
+          <React.Fragment>
+            <TopBar />
+            <Header />
+            <main>
+              <Hero />
+              <StudyPaths />
+              <Story />
+              <Campuses />
+              <Stories />
+              <NewsEvents />
+              <BookVisit />
+              <CTABand />
+            </main>
+            <Footer />
+          </React.Fragment>
+        );
+      }
+
+      ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+    </script>
+  </body>
+</html>
