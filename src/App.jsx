@@ -51,7 +51,7 @@ function BrandLogo({ variant = "header" }) {
 
 function Header() {
   const [open, setOpen] = useState(false);
-  const links = ["Courses", "About", "Campus", "Apply", "FAQ"];
+  // const links = ["Courses", "About", "Campus", "Apply", "FAQ"];
 
   return (
     <header className="site-header">
@@ -65,11 +65,11 @@ function Header() {
         </a>
 
         <nav className="primary-nav" aria-label="Main navigation">
-          <a href="#apply" className="primary-cta">
+          <a href="#contact" className="primary-cta">
             Apply now
           </a>
         </nav>
-
+        {/* 
         <button
           className="menu-btn"
           type="button"
@@ -77,7 +77,7 @@ function Header() {
           onClick={() => setOpen(!open)}
         >
           {open ? "✕" : "☰"}
-        </button>
+        </button> */}
       </div>
 
       {open && (
@@ -91,32 +91,12 @@ function Header() {
               {link}
             </a>
           ))}
-          <a href="#apply" onClick={() => setOpen(false)}>
+          <a href="#contact" onClick={() => setOpen(false)}>
             Apply now
           </a>
         </div>
       )}
     </header>
-  );
-}
-
-function AnnouncementBar() {
-  return (
-    <section className="announcement-bar" aria-label="University update">
-      <div className="wrap announcement-inner">
-        <p>
-          <strong>Birkbeck University of London - Bengaluru</strong> receives
-          Letter of Approval from the{" "}
-          <strong>University Grants Commission, India.</strong>
-        </p>
-        <span className="approval-badge" aria-hidden="true">
-          UGC
-        </span>
-        <a href="#about" className="announcement-link">
-          Read more
-        </a>
-      </div>
-    </section>
   );
 }
 
@@ -617,12 +597,12 @@ function StepSection() {
             </h3>
           </div>
           <div className="cta-row">
-            <a href="#top" className="btn btn-primary">
+            <a href="#contact" className="btn btn-primary">
               Apply now
             </a>
-            <a href="#contact" className="btn btn-secondary light">
+            {/* <a href="#contact" className="btn btn-secondary light">
               Contact us
-            </a>
+            </a> */}
           </div>
         </div>
       </div>
@@ -669,27 +649,82 @@ function ContactSection() {
   return (
     <section className="contact-section" id="contact">
       <div className="wrap contact-layout">
-        <div>
-          <span className="section-kicker">Contact us</span>
-          <h2>We’re here to help you get started.</h2>
-        </div>
-        <div className="contact-grid">
-          <div className="contact-item">
-            <strong>Telephone</strong>
-            <a href="tel:+918460015054">+91 8460015054</a>
-          </div>
-          <div className="contact-item">
-            <strong>Email (Admissions)</strong>
-            <a href="mailto:info@bengaluru.bbk.ac.uk">
-              info@bengaluru.bbk.ac.uk
-            </a>
-          </div>
-          <div className="contact-item">
-            <strong>Email (Support)</strong>
-            <a href="mailto:support@bengaluru.bbk.ac.uk">
-              support@bengaluru.bbk.ac.uk
-            </a>
-          </div>
+        <div className="contact-form-panel">
+          <h3>Book a School Visit</h3>
+          <p>Fill out the form below and our counsellor will contact you.</p>
+
+          <form
+            className="lead-form"
+            onSubmit={(event) => event.preventDefault()}
+          >
+            <div className="field-row">
+              <label>
+                Full name
+                <input
+                  type="text"
+                  name="fullName"
+                  placeholder="Enter your name"
+                />
+              </label>
+            </div>
+
+            <div className="field-row two-col-form">
+              <label>
+                Email
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Enter your email"
+                />
+              </label>
+              <label>
+                Phone
+                <input type="tel" name="phone" placeholder="Enter your phone" />
+              </label>
+            </div>
+
+            <div className="field-row">
+              <label>
+                Address
+                <input
+                  type="text"
+                  name="address"
+                  placeholder="Enter your city or address"
+                />
+              </label>
+            </div>
+
+            <div className="field-row">
+              <label>
+                Course of interest
+                <select name="course">
+                  <option value="">Select a course</option>
+                  <option>BSc (Hons) Business Management</option>
+                  <option>BSc (Hons) Business Analytics</option>
+                  <option>
+                    BSc (Hons) Business Management (International Business)
+                  </option>
+                  <option>MSc International Business Management</option>
+                  <option>MSc Business Analytics</option>
+                </select>
+              </label>
+            </div>
+
+            <div className="field-row">
+              <label>
+                Message
+                <textarea
+                  name="message"
+                  rows="4"
+                  placeholder="Tell us what you want to know"
+                />
+              </label>
+            </div>
+
+            <button type="submit" className="btn btn-primary form-submit">
+              Submit enquiry
+            </button>
+          </form>
         </div>
       </div>
     </section>
@@ -700,7 +735,7 @@ function Footer() {
   return (
     <footer className="site-footer">
       <div className="wrap footer-grid">
-        <div>
+        <div className="footer-brand-wrap">
           <div className="brand footer-brand">
             <img
               className="site-brand-logo"
@@ -714,52 +749,15 @@ function Footer() {
           </p>
         </div>
 
-        <div>
+        <div className="footer-campus">
           <h4>Campus</h4>
           <p>5th Floor, Akash Block</p>
           <p>Sattva Tech Park</p>
           <p>Whitefield, Bengaluru</p>
         </div>
-
-        <div>
-          <h4>Policies</h4>
-          <ul>
-            <li>
-              <a href="#">Student Policies</a>
-            </li>
-            <li>
-              <a href="#">Fees Refund Policy</a>
-            </li>
-            <li>
-              <a href="#">Regulations</a>
-            </li>
-            <li>
-              <a href="#">Terms &amp; Conditions</a>
-            </li>
-          </ul>
-        </div>
-
-        <div>
-          <h4>Quick links</h4>
-          <ul>
-            <li>
-              <a href="#course">Courses</a>
-            </li>
-            <li>
-              <a href="#about">About us</a>
-            </li>
-            <li>
-              <a href="#apply">Apply now</a>
-            </li>
-            <li>
-              <a href="#contact">Contact us</a>
-            </li>
-          </ul>
-        </div>
       </div>
       <div className="wrap footer-bottom">
         <span>© 2026 Birkbeck. All Rights Reserved.</span>
-        <span>Privacy Policy</span>
       </div>
     </footer>
   );
@@ -768,10 +766,8 @@ function Footer() {
 function App() {
   return (
     <>
-      <TopBar />
       <Header />
       <main>
-        <AnnouncementBar />
         <Hero />
         <RankingStrip />
         <UniversityDegree />

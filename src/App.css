@@ -872,9 +872,31 @@ p {
 
 .contact-layout {
   display: grid;
-  grid-template-columns: 0.78fr 1.22fr;
+  grid-template-columns: 1fr;
   gap: 28px;
-  align-items: start;
+  align-items: center;
+  justify-items: center;
+}
+
+.contact-form-panel {
+  width: min(100%, 720px);
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 24px;
+  padding: 28px 24px;
+  box-shadow: var(--shadow);
+  color: var(--ink);
+}
+
+.contact-form-panel h3 {
+  font-size: clamp(1.8rem, 2vw, 2.4rem);
+  margin-bottom: 6px;
+}
+
+.contact-form-panel p {
+  font-size: 0.96rem;
+  color: var(--muted);
+  margin-bottom: 18px;
 }
 
 .contact-grid {
@@ -905,8 +927,21 @@ p {
 
 .footer-grid {
   display: grid;
-  grid-template-columns: 1.5fr 1fr 1fr 1fr;
-  gap: 30px;
+  grid-template-columns: 1.7fr 1fr;
+  gap: 40px;
+  align-items: start;
+}
+
+.footer-brand-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.footer-campus {
+  justify-self: end;
+  text-align: right;
+  min-width: 220px;
 }
 
 .footer-brand {
@@ -943,7 +978,7 @@ p {
   padding-top: 18px;
   border-top: 1px solid rgba(255, 255, 255, 0.12);
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: 14px;
   flex-wrap: wrap;
   color: rgba(255, 255, 255, 0.6);
@@ -973,6 +1008,14 @@ p {
   .contact-layout,
   .footer-grid {
     grid-template-columns: 1fr;
+  }
+
+  .hero-visual {
+    order: 1;
+  }
+
+  .hero-form-card {
+    max-width: 100%;
   }
 
   .ranking-grid,
@@ -1025,9 +1068,34 @@ p {
     padding: 0 20px;
   }
 
-  .hero-form-card iframe {
-    min-height: 540px;
-    height: 540px;
+  .hero-section {
+    padding-top: 56px;
+  }
+
+  .hero-copy h1 {
+    font-size: clamp(2.2rem, 12vw, 3.5rem);
+    line-height: 0.96;
+  }
+
+  .hero-grid {
+    gap: 22px;
+  }
+
+  .hero-visual {
+    gap: 18px;
+  }
+
+  .hero-video-card iframe {
+    min-height: 220px;
+    height: 220px;
+  }
+
+  .hero-form-card {
+    padding: 18px 16px;
+  }
+
+  .two-col-form {
+    grid-template-columns: 1fr;
   }
 
   .ranking-grid,
@@ -1048,5 +1116,14 @@ p {
   .btn,
   .primary-cta {
     width: 100%;
+  }
+
+  .site-brand-logo {
+    width: min(100%, 300px);
+  }
+
+  .contact-layout,
+  .campus-layout {
+    gap: 20px;
   }
 }
