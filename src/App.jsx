@@ -120,38 +120,102 @@ function AnnouncementBar() {
   );
 }
 
+const GAS_URL =
+  "https://script.google.com/macros/s/AKfycbz34ryFElE0OVADl-U1-2Sz5ZxKovfvIIuEZSwDfTm0C1RJuQFj-iJvVqCn6NpwQZzo/exec";
+
 function Hero() {
+  const [submitState, setSubmitState] = useState({
+    type: "idle",
+    message: "",
+  });
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    const pairs = [];
+
+    for (const [key, value] of formData.entries()) {
+      pairs.push(
+        `${encodeURIComponent(key)}=${encodeURIComponent(String(value))}`,
+      );
+    }
+
+    setSubmitState({ type: "loading", message: "Submitting your enquiry..." });
+
+    try {
+      const response = await fetch(GAS_URL, {
+        method: "POST",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+          Accept: "application/json",
+        },
+        body: pairs.join("&"),
+      });
+
+      const rawText = await response.text();
+      let result = { status: "error", message: rawText };
+
+      try {
+        result = JSON.parse(rawText);
+      } catch {
+        result = {
+          status: response.ok ? "success" : "error",
+          message: rawText || "Unexpected response from server.",
+        };
+      }
+
+      if (response.ok && result.status === "success") {
+        form.reset();
+        setSubmitState({
+          type: "success",
+          message: "Your enquiry has been submitted successfully.",
+        });
+        return;
+      }
+
+      setSubmitState({
+        type: "error",
+        message: result.message || "Something went wrong. Please try again.",
+      });
+    } catch (error) {
+      console.error("Form submission failed:", error);
+      setSubmitState({
+        type: "error",
+        message:
+          "Failed to submit the form. Please check the Apps Script deployment.",
+      });
+    }
+  };
+
   return (
     <section className="hero-section" id="top">
       <div className="hero-bg" />
       <div className="wrap hero-grid">
-        <div className="hero-copy">
-          <h1>
-            GRADUATE GLOBALLY.
-            <br />
-            STUDY LOCALLY.
-          </h1>
-          <div className="subtitle">For students with global ambition</div>
-          <p className="hero-intro">
-            Earn a University of London degree with Birkbeck, while studying in
-            Bengaluru.
-          </p>
-          <div className="hero-actions">
-            <a href="#apply" className="btn btn-primary">
-              Apply now
-            </a>
-            <a href="#courses" className="btn btn-secondary">
-              View courses
-            </a>
-            <a href="#" className="btn btn-tertiary">
-              Download course guide
-            </a>
+        <div className="hero-visual">
+          <div className="hero-copy">
+            <h1>
+              GRADUATE GLOBALLY.
+              <br />
+              STUDY LOCALLY.
+            </h1>
+            <div className="subtitle">For students with global ambition</div>
+            <p className="hero-intro">
+              Earn a University of London degree with Birkbeck, while studying
+              in Bengaluru.
+            </p>
           </div>
-          <div className="hero-pills">
-            <span>Same University of London degree</span>
-            <span>Career-ready UK curriculum</span>
-            <span>Learn in a business innovation hub</span>
-            <span>70% lower cost than the UK</span>
+
+          <div className="hero-video-card">
+            <iframe
+              src="https://www.youtube.com/embed/KPtUVIHuIfw?rel=0&modestbranding=1"
+              title="Birkbeck student story"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+            />
           </div>
         </div>
 
@@ -159,10 +223,7 @@ function Hero() {
           <h3>Book a School Visit</h3>
           <p>Fill out the form below and our counsellor will contact you.</p>
 
-          <form
-            className="lead-form"
-            onSubmit={(event) => event.preventDefault()}
-          >
+          <form className="lead-form" onSubmit={handleSubmit}>
             <div className="field-row">
               <label>
                 Full name
@@ -170,6 +231,7 @@ function Hero() {
                   type="text"
                   name="fullName"
                   placeholder="Enter your name"
+                  required
                 />
               </label>
             </div>
@@ -181,21 +243,44 @@ function Hero() {
                   type="email"
                   name="email"
                   placeholder="Enter your email"
+                  required
                 />
               </label>
               <label>
                 Phone
-                <input type="tel" name="phone" placeholder="Enter your phone" />
+                <input
+                  type="tel"
+                  name="phone"
+                  placeholder="Enter your phone"
+                  required
+                />
+              </label>
+            </div>
+
+            <div className="field-row">
+              <label>
+                Address
+                <input
+                  type="text"
+                  name="address"
+                  placeholder="Enter your city or address"
+                  required
+                />
               </label>
             </div>
 
             <div className="field-row">
               <label>
                 Course of interest
-                <select name="course">
+                <select name="course" required>
                   <option value="">Select a course</option>
-                  <option>BSc (Hons)</option>
-                  <option>MSc (Hons)</option>
+                  <option>BSc (Hons) Business Management</option>
+                  <option>BSc (Hons) Business Analytics</option>
+                  <option>
+                    BSc (Hons) Business Management (International Business)
+                  </option>
+                  <option>MSc International Business Management</option>
+                  <option>MSc Business Analytics</option>
                 </select>
               </label>
             </div>
@@ -214,6 +299,15 @@ function Hero() {
             <button type="submit" className="btn btn-primary form-submit">
               Submit enquiry
             </button>
+            {submitState.message && (
+              <p
+                className={`form-status ${submitState.type}`}
+                role="status"
+                aria-live="polite"
+              >
+                {submitState.message}
+              </p>
+            )}
           </form>
         </div>
       </div>
