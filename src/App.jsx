@@ -121,7 +121,7 @@ function AnnouncementBar() {
 }
 
 const GAS_URL =
-  "https://script.google.com/macros/s/AKfycbz34ryFElE0OVADl-U1-2Sz5ZxKovfvIIuEZSwDfTm0C1RJuQFj-iJvVqCn6NpwQZzo/exec";
+  "https://script.google.com/macros/s/AKfycbyEWd9zU0Trq1t5CODLazI6xUltG7zH_0DsKerFPDuJXPAMiL9NlR6fCzM1XlHTF-0p/exec";
 
 function Hero() {
   const [submitState, setSubmitState] = useState({
