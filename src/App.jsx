@@ -33,19 +33,11 @@ function BrandLogo({ variant = "header" }) {
   const isBanner = variant === "banner";
 
   return (
-    <svg
+    <img
       className={isBanner ? "brand-logo brand-logo-banner" : "brand-logo"}
-      viewBox="0 0 1200 260"
-      role="img"
-      aria-label="Birkbeck University of London logo"
-    >
-      <text x="600" y="140" textAnchor="middle" className="brand-logo-word">
-        Birkbeck
-      </text>
-      <text x="600" y="205" textAnchor="middle" className="brand-logo-subline">
-        UNIVERSITY OF LONDON
-      </text>
-    </svg>
+      src="/birkbeck-logo.svg"
+      alt="Birkbeck University of London logo"
+    />
   );
 }
 

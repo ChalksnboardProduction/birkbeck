@@ -102,6 +102,9 @@ p {
 .logo-wrap {
   padding-top: 12px;
   padding-bottom: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .brand-lockup {
@@ -115,15 +118,15 @@ p {
 
 .brand-logo {
   display: block;
-  width: 100%;
-  max-width: 620px;
-  height: auto;
-  overflow: visible;
+  width: 215px;
+  height: 60px;
+  object-fit: contain;
+  image-rendering: -webkit-optimize-contrast;
 }
 
 .brand-logo-banner {
-  max-width: 100%;
-  width: 100%;
+  width: 215px;
+  height: 60px;
 }
 
 .brand-logo-word,
@@ -189,8 +192,10 @@ p {
 
 .site-brand-logo {
   display: block;
-  width: min(100%, 520px);
-  height: auto;
+  width: 215px;
+  height: 60px;
+  object-fit: contain;
+  image-rendering: -webkit-optimize-contrast;
 }
 
 .brand-mark {
@@ -718,7 +723,7 @@ p {
   align-items: center;
 }
 
-.programme-block + .programme-block {
+.programme-block+.programme-block {
   margin-top: 34px;
 }
 
