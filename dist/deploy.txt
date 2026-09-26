@@ -1,0 +1,32 @@
+# Deployment Steps for Birkbeck Project
+
+Whenever you make changes to the code locally, you need to push them to GitHub and then pull them on the EC2 server. Since this project is a React/Vite app, you also need to make sure the built `dist` folder is updated in the directory Nginx is serving from.
+
+Here are the exact steps to deploy your updates:
+
+### 1. Build and Push Locally
+1. Run `npm run build` in your local terminal.
+2. Commit and push your changes (including the `dist` folder) to GitHub.
+
+### 2. Pull and Deploy on EC2
+Log into your EC2 server via SSH, then run the following commands:
+
+1. **Go to the project folder:**
+   cd /home/ec2-user/birkbeck
+
+2. **Pull the latest code from GitHub:**
+   git pull
+
+3. **(Optional but recommended) Clear the old files in the Nginx serving directory:**
+   sudo rm -rf /var/www/birkbeck/*
+
+4. **Copy the newly built `dist` folder to the Nginx directory:**
+   sudo cp -r /home/ec2-user/birkbeck/dist/* /var/www/birkbeck/
+
+5. **(Optional) Restart Nginx:**
+   sudo systemctl restart nginx
+
+### 3. Verification
+Visit your website. If you don't see the changes immediately, make sure to do a **Hard Refresh** in your browser:
+- Windows/Linux: `Ctrl` + `F5`
+- Mac: `Cmd` + `Shift` + `R`

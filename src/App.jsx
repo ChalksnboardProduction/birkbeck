@@ -152,15 +152,33 @@ function Hero() {
 
     setSubmitState({ type: "loading", message: "Submitting your enquiry..." });
 
-    // Mock API call for demonstration purposes because the actual GAS URL is failing
-    setTimeout(() => {
+    try {
+      // Use 'no-cors' to prevent the browser from blocking the Google Apps Script redirect
+      await fetch(GAS_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+        },
+        body: pairs.join("&"),
+      });
+
+      // With 'no-cors', the response is opaque and we can't read it.
+      // If the fetch resolves without throwing a network error, we assume success.
       form.reset();
       setSubmitState({
         type: "idle",
         message: "",
       });
       navigate("/thank-you");
-    }, 1500);
+    } catch (error) {
+      console.error("Form submission failed:", error);
+      setSubmitState({
+        type: "error",
+        message:
+          "Failed to submit the form. Please check your internet connection and try again.",
+      });
+    }
   };
 
   return (
